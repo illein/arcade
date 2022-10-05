@@ -34,3 +34,66 @@
     background: theme(colors.fuchsia.500);
   }
 }
+
+@layer components {
+  :root {
+    --arcade-edge: 0 4px 0 theme(colors.black), 0 -4px 0 theme(colors.black),
+      4px 0 theme(colors.black), -4px 0 0 theme(colors.black);
+
+    --arcade-edge-hover: 0 4px 0 theme(colors.fuchsia.500),
+      0 -4px 0 theme(colors.fuchsia.500), 4px 0 theme(colors.fuchsia.500),
+      -4px 0 0 theme(colors.fuchsia.500);
+
+    --arcade-cursor-click: url("/cursor-click.png"), pointer;
+
+    --arcade-progress-track-size: min(10px, 1ex);
+  }
+
+  .arcade-card {
+    box-shadow: var(--arcade-edge);
+  }
+
+  .arcade-card-hover:hover {
+    box-shadow: var(--arcade-edge-hover);
+  }
+
+  .content {
+    @apply min-h-[calc(100vh-200px)] px-20;
+  }
+
+  .arcade-btn {
+    @apply relative bg-white text-black;
+    cursor: var(--arcade-cursor-click);
+    box-shadow: inset -4px -4px theme(colors.slate.400);
+  }
+
+  .arcade-btn:hover {
+    @apply bg-gray-200;
+  }
+
+  .arcade-btn:active,
+  .arcade-btn:focus {
+    @apply pt-4 pl-4 pb-2 pr-2;
+    box-shadow: inset 4px 4px theme(colors.slate.400);
+  }
+
+  .arcade-btn::before,
+  .arcade-btn::after {
+    @apply absolute box-content h-full w-full border-4 border-solid border-black;
+    content: "";
+  }
+
+  .arcade-btn::before {
+    top: -4px;
+    left: 0;
+    border-right: 2px;
+    border-left: 2px;
+  }
+
+  .arcade-btn::after {
+    top: 0;
+    left: -4px;
+    border-top: 2px;
+    border-bottom: 2px;
+  }
+}

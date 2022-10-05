@@ -1,22 +1,31 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 
-import { Background } from "@/components/Background";
-import { Navbar } from "@/components/Navbar";
+import { GameList } from "@/components/Game";
+import { GameModal } from "@/components/Game/GameModal";
 import { trpc } from "@/utils/trpc";
 
 const HomePage: NextPage = () => {
-  const games = trpc.game.getAll.useQuery();
-  console.log(games);
+  const { data, isLoading } = trpc.game.getAll.useQuery();
+  const [gameId, setGameId] = useState<string>();
   return (
     <>
       <Head>
         <title>Arcade</title>
       </Head>
-      <Navbar />
-      <main className="h-screen w-screen">
-        <Background />
+      <main>
+        <div className="content w-full">
+          <GameList
+            games={data}
+            isLoading={isLoading}
+            onSelect={(id) => setGameId(id)}
+          />
+        </div>
       </main>
+      {gameId && (
+        <GameModal gameId={gameId} onClose={() => setGameId(undefined)} />
+      )}
     </>
   );
 };
