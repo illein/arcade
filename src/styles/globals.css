@@ -80,6 +80,14 @@
     box-shadow: inset 4px 4px theme(colors.slate.400);
   }
 
+  .arcade-btn:disabled,
+  .arcade-btn:disabled:hover,
+  .arcade-btn:disabled:active {
+    @apply relative bg-slate-200 p-3 text-slate-400;
+    cursor: not-allowed;
+    box-shadow: inset -4px -4px theme(colors.slate.400);
+  }
+
   .arcade-btn::before,
   .arcade-btn::after {
     @apply absolute box-content h-full w-full border-4 border-solid border-black;
@@ -134,5 +142,27 @@
       transform: scale(0.75);
       opacity: 0.45;
     }
+  }
+
+  /* icon */
+  .arcade-icon {
+    @apply bg-cover bg-no-repeat;
+  }
+
+  /* angle rights */
+  .arcade-icon-angle-down {
+    background-image: url("/angle-down.png");
+  }
+
+  .arcade-icon-angle-up {
+    background-image: url("/angle-up.png");
+  }
+
+  .arcade-icon-angle-left {
+    background-image: url("/angle-left.png");
+  }
+
+  .arcade-icon-angle-right {
+    background-image: url("/angle-right.png");
   }
 }

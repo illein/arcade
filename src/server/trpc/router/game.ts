@@ -6,8 +6,10 @@ export const gameRouter = t.router({
   getAll: t.procedure
     .input(z.object({ text: z.string().nullish() }).nullish())
     .query(({ ctx, input }) => {
-      console.log("here", input);
       return ctx.prisma.game.findMany({
+        orderBy: {
+          name: "asc",
+        },
         where: {
           name: {
             contains: input?.text ?? "",

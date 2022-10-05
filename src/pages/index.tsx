@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 
+import { Filters } from "@/components/Filters";
 import { GameList } from "@/components/Game";
 import { GameModal } from "@/components/Game/GameModal";
 import { Search } from "@/components/Search";
@@ -30,16 +31,19 @@ const HomePage: NextPage = () => {
       </Head>
       <main>
         <div className="content flex w-full flex-col">
-          <Search
-            isSearching={isLoading}
-            onClear={() => {
-              setSearchTerm("");
-              setIsSearching(true);
-            }}
-            onChange={setSearchTerm}
-            onSearch={() => setIsSearching(true)}
-            value={searchTerm}
-          />
+          <div className="flex items-center justify-between">
+            <Search
+              isSearching={isLoading}
+              onClear={() => {
+                setSearchTerm("");
+                setIsSearching(true);
+              }}
+              onChange={setSearchTerm}
+              onSearch={() => setIsSearching(true)}
+              value={searchTerm}
+            />
+            <Filters />
+          </div>
           <GameList
             games={data}
             isLoading={isLoading}

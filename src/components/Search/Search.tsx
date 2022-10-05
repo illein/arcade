@@ -33,30 +33,37 @@ export const Search = ({
   }, [handleDebouncedChange]);
 
   return (
-    <div className="arcade-edge relative flex max-w-md">
-      <input
-        type="text"
-        value={value}
-        onKeyDown={handleKeyEvent}
-        onChange={(e) => handleDebouncedChange(e.target.value)}
-        className="w-full border p-3"
-      />
-      {value && (
-        <button
-          disabled={isSearching}
-          className="absolute right-28 p-5"
-          onClick={onClear}
-        >
-          <Image src="/close.png" width={10} height={10} alt="Clear" />
-        </button>
-      )}
-      <button
-        disabled={isSearching}
-        className="arcade-btn ml-auto p-3"
-        onClick={onSearch}
-      >
+    <div>
+      <label className="mb-4 block" htmlFor="search">
         Search
-      </button>
+      </label>
+      <div className="arcade-edge relative flex max-w-sm">
+        <input
+          id="search"
+          type="text"
+          value={value}
+          placeholder="Super Mario Bros"
+          onKeyDown={handleKeyEvent}
+          onChange={(e) => handleDebouncedChange(e.target.value)}
+          className="w-full border p-3"
+        />
+        {value && (
+          <button
+            disabled={isSearching}
+            className="absolute right-20 p-5"
+            onClick={onClear}
+          >
+            <Image src="/close.png" width={10} height={10} alt="Clear" />
+          </button>
+        )}
+        <button
+          disabled={isSearching || !value.trim().length}
+          className="arcade-btn ml-auto p-3"
+          onClick={onSearch}
+        >
+          Find
+        </button>
+      </div>
     </div>
   );
 };
