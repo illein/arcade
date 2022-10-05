@@ -16,6 +16,7 @@
       "@/api/*": ["./src/pages/api/*"],
       "@/components/*": ["./src/components/*"],
       "@/env/*": ["./src/env/*"],
+      "@/hooks/*": ["./src/hooks/*"],
       "@/pages/*": ["./src/pages/*"],
       "@/server/*": ["./src/server/*"],
       "@/styles/*": ["./src/styles/*"],

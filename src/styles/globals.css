@@ -49,6 +49,10 @@
     --arcade-progress-track-size: min(10px, 1ex);
   }
 
+  .arcade-edge {
+    box-shadow: var(--arcade-edge);
+  }
+
   .arcade-card {
     box-shadow: var(--arcade-edge);
   }
@@ -71,8 +75,7 @@
     @apply bg-gray-200;
   }
 
-  .arcade-btn:active,
-  .arcade-btn:focus {
+  .arcade-btn:active {
     @apply pt-4 pl-4 pb-2 pr-2;
     box-shadow: inset 4px 4px theme(colors.slate.400);
   }

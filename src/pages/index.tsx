@@ -4,18 +4,42 @@ import { useState } from "react";
 
 import { GameList } from "@/components/Game";
 import { GameModal } from "@/components/Game/GameModal";
+import { Search } from "@/components/Search";
 import { trpc } from "@/utils/trpc";
 
 const HomePage: NextPage = () => {
-  const { data, isLoading } = trpc.game.getAll.useQuery();
   const [gameId, setGameId] = useState<string>();
+  const [isSearching, setIsSearching] = useState(true);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const { data, isLoading } = trpc.game.getAll.useQuery(
+    {
+      text: searchTerm,
+    },
+    {
+      enabled: isSearching,
+      keepPreviousData: true,
+      onSettled: () => setIsSearching(false),
+    },
+  );
+
   return (
     <>
       <Head>
         <title>Arcade</title>
       </Head>
       <main>
-        <div className="content w-full">
+        <div className="content flex w-full flex-col">
+          <Search
+            isSearching={isLoading}
+            onClear={() => {
+              setSearchTerm("");
+              setIsSearching(true);
+            }}
+            onChange={setSearchTerm}
+            onSearch={() => setIsSearching(true)}
+            value={searchTerm}
+          />
           <GameList
             games={data}
             isLoading={isLoading}

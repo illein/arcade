@@ -3,22 +3,23 @@ import { z } from "zod";
 import { t } from "@/server/trpc/trpc";
 
 export const gameRouter = t.router({
-  hello: t.procedure
+  getAll: t.procedure
     .input(z.object({ text: z.string().nullish() }).nullish())
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input?.text ?? "world"}`,
-      };
+    .query(({ ctx, input }) => {
+      console.log("here", input);
+      return ctx.prisma.game.findMany({
+        where: {
+          name: {
+            contains: input?.text ?? "",
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+          photoURL: true,
+        },
+      });
     }),
-  getAll: t.procedure.query(({ ctx }) => {
-    return ctx.prisma.game.findMany({
-      select: {
-        id: true,
-        name: true,
-        photoURL: true,
-      },
-    });
-  }),
   getCount: t.procedure.query(({ ctx }) => {
     return ctx.prisma.game.count();
   }),

@@ -1,6 +1,7 @@
 import { inferProcedureOutput } from "@trpc/server";
 import * as df from "date-fns";
 import Image from "next/future/image";
+import React, { useEffect } from "react";
 
 import { AppRouter } from "@/server/trpc/router";
 import { trpc } from "@/utils/trpc";
@@ -33,6 +34,18 @@ interface IGameProps {
 }
 
 const Game = ({ game, onClose }: IGameProps) => {
+  useEffect(() => {
+    const handleKeyEvent = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyEvent);
+    return () => {
+      document.removeEventListener("keydown", handleKeyEvent);
+    };
+  }, [onClose]);
   return (
     <article className="arcade-card relative z-10 flex w-full items-center bg-white p-8">
       <button
