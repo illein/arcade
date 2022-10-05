@@ -28,19 +28,20 @@ const HomePage: NextPage = () => {
     },
   );
 
-  // const games = useMemo(() => {
-  //   if (selectedGenre !== "all") {
-  //     return data?.filter((d) =>
-  //       Object.keys(d.genres)
-  //         .map((g) => g.name)
-  //         .includes(selectedGenre),
-  //     );
-  //   }
-  //   return data;
-  // }, [data, selectedGenre]);
+  const games = useMemo(() => {
+    if (selectedGenre !== "all") {
+      return data?.filter((d) =>
+        d.genres.map((g) => g.name).includes(selectedGenre),
+      );
+      // What if now I selected a platform?
+    }
 
-  // console.log("games", games);
-  // console.log("data", data);
+    if (selectedPlatform !== "all") {
+      return data?.filter((d) => d.platform?.name === selectedPlatform);
+      // What if now I selected a genre?
+    }
+    return data;
+  }, [data, selectedGenre, selectedPlatform]);
 
   return (
     <>
@@ -68,7 +69,7 @@ const HomePage: NextPage = () => {
             />
           </div>
           <GameList
-            games={data}
+            games={games}
             isLoading={isLoading}
             onSelect={(id) => setGameId(id)}
           />
