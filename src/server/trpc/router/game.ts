@@ -8,8 +8,6 @@ export const gameRouter = t.router({
       z
         .object({
           name: z.string().nullish(),
-          genre: z.string().nullish(),
-          platform: z.string().nullish(),
         })
         .nullish(),
     )
@@ -22,23 +20,21 @@ export const gameRouter = t.router({
           name: {
             contains: input?.name ?? "",
           },
-          // genres: {
-          //   some: {
-          //     name: {
-          //       contains: input?.genre ?? "",
-          //     },
-          //   },
-          // },
-          // platform: {
-          //   name: {
-          //     equals: input?.platform ?? "",
-          //   },
-          // },
         },
         select: {
           id: true,
           name: true,
           photoURL: true,
+          genres: {
+            select: {
+              name: true,
+            },
+          },
+          platform: {
+            select: {
+              name: true,
+            },
+          },
         },
       });
     }),

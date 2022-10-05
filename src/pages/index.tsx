@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Filters } from "@/components/Filters";
 import { GameList } from "@/components/Game";
@@ -20,8 +20,6 @@ const HomePage: NextPage = () => {
   const { data, isLoading } = trpc.game.getAll.useQuery(
     {
       name: searchTerm,
-      genre: selectedGenre === "all" ? "" : selectedGenre,
-      platform: selectedPlatform === "all" ? "" : selectedPlatform,
     },
     {
       enabled: isSearching,
@@ -29,6 +27,20 @@ const HomePage: NextPage = () => {
       onSettled: () => setIsSearching(false),
     },
   );
+
+  // const games = useMemo(() => {
+  //   if (selectedGenre !== "all") {
+  //     return data?.filter((d) =>
+  //       Object.keys(d.genres)
+  //         .map((g) => g.name)
+  //         .includes(selectedGenre),
+  //     );
+  //   }
+  //   return data;
+  // }, [data, selectedGenre]);
+
+  // console.log("games", games);
+  // console.log("data", data);
 
   return (
     <>
