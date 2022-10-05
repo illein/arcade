@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { t } from "../trpc";
+import { t } from "@/server/trpc/trpc";
 
-export const exampleRouter = t.router({
+export const gameRouter = t.router({
   hello: t.procedure
     .input(z.object({ text: z.string().nullish() }).nullish())
     .query(({ input }) => {
@@ -11,6 +11,6 @@ export const exampleRouter = t.router({
       };
     }),
   getAll: t.procedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
+    return ctx.prisma.game.findMany();
   }),
 });
