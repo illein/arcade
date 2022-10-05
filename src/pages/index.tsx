@@ -10,12 +10,18 @@ import { trpc } from "@/utils/trpc";
 
 const HomePage: NextPage = () => {
   const [gameId, setGameId] = useState<string>();
+
+  const [selectedGenre, setSelectedGenre] = useState<string>("all");
+  const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
+
   const [isSearching, setIsSearching] = useState(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const { data, isLoading } = trpc.game.getAll.useQuery(
     {
-      text: searchTerm,
+      name: searchTerm,
+      genre: selectedGenre === "all" ? "" : selectedGenre,
+      platform: selectedPlatform === "all" ? "" : selectedPlatform,
     },
     {
       enabled: isSearching,
@@ -42,7 +48,12 @@ const HomePage: NextPage = () => {
               onSearch={() => setIsSearching(true)}
               value={searchTerm}
             />
-            <Filters />
+            <Filters
+              onSelectGenre={setSelectedGenre}
+              onSelectPlatform={setSelectedPlatform}
+              selectedGenre={selectedGenre}
+              selectedPlatform={selectedPlatform}
+            />
           </div>
           <GameList
             games={data}

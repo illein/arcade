@@ -4,7 +4,15 @@ import { t } from "@/server/trpc/trpc";
 
 export const gameRouter = t.router({
   getAll: t.procedure
-    .input(z.object({ text: z.string().nullish() }).nullish())
+    .input(
+      z
+        .object({
+          name: z.string().nullish(),
+          genre: z.string().nullish(),
+          platform: z.string().nullish(),
+        })
+        .nullish(),
+    )
     .query(({ ctx, input }) => {
       return ctx.prisma.game.findMany({
         orderBy: {
@@ -12,8 +20,20 @@ export const gameRouter = t.router({
         },
         where: {
           name: {
-            contains: input?.text ?? "",
+            contains: input?.name ?? "",
           },
+          // genres: {
+          //   some: {
+          //     name: {
+          //       contains: input?.genre ?? "",
+          //     },
+          //   },
+          // },
+          // platform: {
+          //   name: {
+          //     equals: input?.platform ?? "",
+          //   },
+          // },
         },
         select: {
           id: true,

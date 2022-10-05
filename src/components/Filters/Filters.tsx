@@ -4,17 +4,36 @@ import { trpc } from "@/utils/trpc";
 
 import { Dropdown } from "../Dropdown";
 
-export const Filters = () => {
+interface IFiltersProps {
+  onSelectGenre: (genre: string) => void;
+  onSelectPlatform: (platform: string) => void;
+  selectedGenre: string;
+  selectedPlatform: string;
+}
+
+export const Filters = ({
+  onSelectGenre,
+  onSelectPlatform,
+  selectedGenre,
+  selectedPlatform,
+}: IFiltersProps) => {
   return (
     <div className="flex">
-      <GenreFilter />
-      <PlatformFilter />
+      <GenreFilter selectedGenre={selectedGenre} onSelect={onSelectGenre} />
+      <PlatformFilter
+        selectedPlatform={selectedPlatform}
+        onSelect={onSelectPlatform}
+      />
     </div>
   );
 };
 
-const GenreFilter = () => {
-  const [selectedGenre, setSelectedGenre] = useState<string>("all");
+interface IGenreFilterProps {
+  onSelect: (genre: string) => void;
+  selectedGenre: string;
+}
+
+const GenreFilter = ({ onSelect, selectedGenre }: IGenreFilterProps) => {
   const { data } = trpc.genre.getAll.useQuery();
   const genres = useMemo(
     () => (data ?? []).map((d) => ({ label: d.name, value: d.name })),
@@ -27,15 +46,22 @@ const GenreFilter = () => {
         id="genre-dropdown"
         label="Genre"
         options={genres}
-        onSelect={(genre) => setSelectedGenre(genre)}
+        onSelect={(genre) => onSelect(genre)}
         value={selectedGenre}
       />
     </div>
   );
 };
 
-const PlatformFilter = () => {
-  const [selectedGenre, setSelectedGenre] = useState<string>("all");
+interface IPlatformFilterProps {
+  onSelect: (platform: string) => void;
+  selectedPlatform: string;
+}
+
+const PlatformFilter = ({
+  onSelect,
+  selectedPlatform,
+}: IPlatformFilterProps) => {
   const { data } = trpc.platform.getAll.useQuery();
   const platforms = useMemo(
     () => (data ?? []).map((d) => ({ label: d.name, value: d.name })),
@@ -48,8 +74,8 @@ const PlatformFilter = () => {
         id="genre-dropdown"
         label="Platform"
         options={platforms}
-        onSelect={(genre) => setSelectedGenre(genre)}
-        value={selectedGenre}
+        onSelect={(platform) => onSelect(platform)}
+        value={selectedPlatform}
       />
     </div>
   );
