@@ -12,6 +12,8 @@ interface IGameListProps {
 }
 
 export const GameList = ({ games, isLoading, onSelect }: IGameListProps) => {
+  if (isLoading && !games) return <SkeletonGrid />;
+
   if (!isLoading && !games?.length) {
     return (
       <div className="m-auto flex max-w-md flex-col text-center">
@@ -21,10 +23,6 @@ export const GameList = ({ games, isLoading, onSelect }: IGameListProps) => {
         <p>Oh, bugger, looks like that game is not in the collection yet!</p>
       </div>
     );
-  }
-
-  if (isLoading && !games) {
-    return <SkeletonGrid />;
   }
 
   return (

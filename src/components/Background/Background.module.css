@@ -1,7 +1,7 @@
 .arcade-bg {
   animation-duration: 3s;
   animation-iteration-count: infinite;
-  animation-name: bgMove;
+  animation-name: moveBackground;
   animation-timing-function: steps(5);
   background-image: url(/stars_1.png), url(/stars_2.png);
   background-position: 20% 80%, 80% 80%;
@@ -9,7 +9,7 @@
   background-size: 40%;
 }
 
-@keyframes bgMove {
+@keyframes moveBackground {
   0%,
   100% {
     transform: translateY(0);

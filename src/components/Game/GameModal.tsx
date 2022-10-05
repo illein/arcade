@@ -46,6 +46,7 @@ const Game = ({ game, onClose }: IGameProps) => {
       document.removeEventListener("keydown", handleKeyEvent);
     };
   }, [onClose]);
+
   return (
     <article className="arcade-card relative z-10 flex w-full items-center bg-white p-8">
       <button

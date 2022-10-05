@@ -99,4 +99,40 @@
     border-top: 2px;
     border-bottom: 2px;
   }
+
+  .lost-invader {
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-name: moveInvader;
+    animation-timing-function: steps(5);
+  }
+
+  .lost-invader-shadow {
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-name: moveShadow;
+    animation-timing-function: steps(5);
+  }
+
+  @keyframes moveInvader {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-1rem);
+    }
+  }
+
+  @keyframes moveShadow {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.75);
+      opacity: 0.45;
+    }
+  }
 }
