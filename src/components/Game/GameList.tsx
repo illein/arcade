@@ -1,8 +1,9 @@
 import { inferProcedureOutput } from "@trpc/server";
 import Image from "next/future/image";
 
-import { Loader } from "@/components/Loader";
 import { AppRouter } from "@/server/trpc/router";
+
+import { SkeletonGrid } from "../SkeletonGrid";
 
 interface IGameListProps {
   games: inferProcedureOutput<AppRouter["game"]["getAll"]> | undefined;
@@ -11,7 +12,7 @@ interface IGameListProps {
 }
 
 export const GameList = ({ games, isLoading, onSelect }: IGameListProps) => {
-  if (!games || isLoading) return <Loader />;
+  if (!games || isLoading) return <SkeletonGrid />;
   return (
     <div className="grid grid-cols-4 gap-4">
       {games.map((game) => (
